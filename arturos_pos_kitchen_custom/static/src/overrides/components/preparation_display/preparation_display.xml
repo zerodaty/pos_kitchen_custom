@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="arturos_pos_kitchen_custom.PreparationDisplay" t-inherit="pos_preparation_display.PreparationDisplay" t-inherit-mode="extension">
+        <!-- Replace the main area to use column-based layout grouped by POS config -->
+        <xpath expr="//div[hasclass('o_pdis_main_area')]" position="replace">
+            <div class="o_pdis_main_area w-100 h-100 overflow-hidden">
+                <!-- No products message -->
+                <div t-if="!preparationDisplay.posHasProducts and !this.preparationDisplay.loadingProducts" class="o_pdis_no_products h-100 text-center pt-5">
+                    <h2 class="mb-3">No data available.</h2>
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-2">
+                        <a role="button" class="btn btn-lg btn-secondary" t-on-click="() => this.preparationDisplay.loadScenarioRestaurantData()">Explore demo data</a>
+                        <span class="text-muted">or simply wait for orders to be sent for preparation.</span>
+                    </div>
+                </div>
+
+                <!-- Orders grouped by POS config in columns -->
+                <div t-if="preparationDisplay.posHasProducts" class="o_pdis_pos_columns d-flex gap-3 p-3 h-100 overflow-hidden">
+                    <t t-foreach="this.preparationDisplay.getOrdersByPosConfig()" t-as="posConfigGroup" t-key="posConfigGroup[0]">
+                        <div class="o_pdis_pos_column flex-fill d-flex flex-column overflow-hidden">
+                            <!-- POS Config Header Banner -->
+                            <div class="o_pdis_pos_header text-center fw-bold w-100 py-1 fs-5 mb-2 shadow-sm"
+                                 t-attf-style="background-color: {{ this.preparationDisplay.posHeaderColor }}; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.4);">
+                                <i class="fa fa-desktop text-white me-2" aria-hidden="true"/>
+                                <span t-esc="posConfigGroup[0]"/>
+                            </div>
+                            
+                            <!-- Orders for this POS config -->
+                            <div class="o_pdis_orders position-relative d-grid flex-grow-1 gap-3 text-reset overflow-auto">
+                                <t t-foreach="posConfigGroup[1]" t-as="order" t-key="order.id">
+                                    <Order order="order"/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Hide Recall and Done buttons only when last stage is selected -->
+        <xpath expr="//div[hasclass('top-buttons')]" position="attributes">
+            <attribute name="t-attf-class">top-buttons {{ this.preparationDisplay.selectedStageId === this.preparationDisplay.lastStage.id ? 'd-none' : '' }}</attribute>
+        </xpath>
+
+        <!-- Always hide the Recall (Regresar a etapa anterior) action in desktop navbar -->
+        <xpath expr="//div[hasclass('top-buttons')]/button[1]" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <!-- Hide ALL Done buttons in top-buttons div (there are 2: one for isLastStage, one for isDebug) -->
+        <xpath expr="//div[hasclass('top-buttons')]/button[@t-if='isLastStage and !isDebug']" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+        
+        <xpath expr="//div[hasclass('top-buttons')]/button[@t-if='isDebug']" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <!-- Always hide the Recall action in burger menu -->
+        <xpath expr="//li[hasclass('recall-button')]" position="attributes">
+            <attribute name="class" add="d-none" separator=" "/>
+        </xpath>
+
+        <!-- Replace Odoo logo with dynamic KDS logo (from Odoo config, fallback to Arturos static file) -->
+        <!-- Clicking the logo opens the About dialog -->
+        <xpath expr="//div[hasclass('o_pdis_logo')]" position="replace">
+            <div class="o_pdis_logo d-flex justify-content-center py-3 border-top">
+                <img t-att-src="this.preparationDisplay.kdsLogoUrl"
+                     alt="KDS Logo"
+                     title="Acerca del módulo"
+                     style="max-height: 150px; width: auto; object-fit: contain; cursor: pointer; transition: opacity 0.2s, transform 0.2s;"
+                     t-on-mouseenter="(e) => e.currentTarget.style.opacity = '0.75'"
+                     t-on-mouseleave="(e) => e.currentTarget.style.opacity = '1'"
+                     t-on-click="() => this.openAboutDialog()"/>
+                     
+                <!-- Render AboutDialog conditionally when state is true, passing the close callback -->
+                <t t-if="this.aboutDialogState and this.aboutDialogState.isVisible">
+                    <AboutDialog onClose="() => this.closeAboutDialog()"/>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

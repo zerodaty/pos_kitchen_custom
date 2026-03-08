@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* arturos_pos_kitchen_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-09 04:00:00+0000\n"
+"PO-Revision-Date: 2025-12-09 04:00:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#. module: pos_preparation_display
+#: model:ir.model,name:pos_preparation_display.model_pos_preparation_display_display
+msgid "Preparation Display"
+msgstr "KDS"
+
+#. module: pos_preparation_display
+#: model:ir.actions.act_window,name:pos_preparation_display.action_preparation_display_bar_restaurant_filter
+msgid "Preparation Displays"
+msgstr "KDS"
+
+#. module: pos_preparation_display
+#: model:ir.actions.server,name:pos_preparation_display.action_pos_preparation_display_kitchen_display
+#: model:ir.ui.menu,name:pos_preparation_display.menu_point_kitchen_display_root
+msgid "Kitchen Display"
+msgstr "KDS"
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,field_description:arturos_pos_kitchen_custom.field_pos_preparation_display_display__enable_auto_send_on_payment
+msgid "Auto-send to KDS on Payment"
+msgstr "Auto-enviar a KDS al Pagar"
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,help:arturos_pos_kitchen_custom.field_pos_preparation_display_display__enable_auto_send_on_payment
+msgid "When enabled, orders are automatically sent to KDS upon payment completion instead of requiring the Order button."
+msgstr "Cuando está habilitado, las órdenes se envían automáticamente al KDS al completar el pago sin necesidad de presionar el botón Orden."
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,field_description:arturos_pos_kitchen_custom.field_pos_preparation_display_display__show_empty_columns
+msgid "Show Empty Columns"
+msgstr "Mostrar Columnas Vacías"
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,help:arturos_pos_kitchen_custom.field_pos_preparation_display_display__show_empty_columns
+msgid "When enabled, columns for all configured POS configs are always visible, even if they have no orders. When disabled, only columns with active orders are shown."
+msgstr "Cuando está habilitado, las columnas para todas las configuraciones POS se muestran siempre, incluso si no tienen órdenes. Cuando está deshabilitado, solo se muestran las columnas con órdenes activas."
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,field_description:arturos_pos_kitchen_custom.field_pos_preparation_display_display__key_fullscreen
+msgid "Tecla: Pantalla Completa"
+msgstr "Tecla: Pantalla Completa"
+
+#. module: arturos_pos_kitchen_custom
+#: model:ir.model.fields,help:arturos_pos_kitchen_custom.field_pos_preparation_display_display__key_fullscreen
+msgid "Tecla para activar/desactivar pantalla completa (ej: F11, f)"
+msgstr "Tecla para activar/desactivar pantalla completa (ej: F11, f)"

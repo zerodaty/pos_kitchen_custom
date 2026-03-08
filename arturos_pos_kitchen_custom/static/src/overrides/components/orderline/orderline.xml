@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="arturos_pos_kitchen_custom.Orderline" t-inherit="pos_preparation_display.Orderline" t-inherit-mode="extension">
+        <!-- Hide orderlines that are service types (they're shown as badges instead) -->
+        <xpath expr="//section[hasclass('o_preparation_display_orderline')]" position="attributes">
+            <attribute name="t-if">!props.orderline.isServiceType</attribute>
+        </xpath>
+        
+        <!-- Add indentation for combo child items -->
+        <xpath expr="//div[hasclass('o_pdis_orderline_infos')]" position="attributes">
+            <attribute name="t-att-class">{'ms-4': props.orderline.comboParentUuid}</attribute>
+        </xpath>
+        
+        <!-- Make combo child items slightly smaller and italic -->
+        <xpath expr="//div[hasclass('o_pdis_product-name')]" position="attributes">
+            <attribute name="t-att-class">{'fst-italic small': props.orderline.comboParentUuid}</attribute>
+        </xpath>
+        
+        <!-- Add service type badge next to combo parent name -->
+        <xpath expr="//div[hasclass('o_pdis_product-name')]" position="after">
+            <t t-if="props.orderline.serviceTypeLabel">
+                <span class="service-type-badge" t-esc="props.orderline.serviceTypeLabel"/>
+            </t>
+        </xpath>
+    </t>
+</templates>

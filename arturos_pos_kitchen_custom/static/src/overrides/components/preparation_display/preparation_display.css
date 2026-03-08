@@ -1,0 +1,159 @@
+/* Background KDS: esta regla es el FALLBACK estático.
+   Si hay imagen configurada en Odoo (kds_background_image),
+   el JS aplica inline style que tiene mayor prioridad. */
+.o_pdis_main_screen {
+    background-image: url('/arturos_pos_kitchen_custom/static/src/img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Make inner containers transparent so background shows through */
+.o_pdis_content,
+.o_pdis_main_area,
+.o_pdis_orders {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Navbar styling - white to complement orange headers */
+.o_pdis_navbar {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border-bottom: 2px solid #f7931e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* POS Config Column Layout */
+.o_pdis_pos_columns {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.o_pdis_pos_column {
+    flex: 1 1 0;
+    /* flex-basis: 0 fuerza ancho igual */
+    min-width: 0;
+    /* Allows flex-shrink to work properly */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Evita que la columna crezca más allá de su ancho */
+}
+
+/* Cuando hay 2 cajas, limitar cada columna al 50% */
+.o_pdis_pos_columns:has(.o_pdis_pos_column:nth-child(2)) .o_pdis_pos_column {
+    max-width: 50%;
+}
+
+/* Ensure empty columns maintain their width */
+.o_pdis_pos_column .o_pdis_orders {
+    min-height: 200px;
+    /* Minimum height to prevent collapse */
+    flex-grow: 1;
+    width: 100%;
+}
+
+.o_pdis_pos_header {
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+/* Siempre mostrar el banner para identificar la caja */
+
+/* Grid layout para las órdenes:
+   - 3 columnas cuando hay 1 sola caja (aprovechar todo el ancho)
+   - 2 columnas cuando hay 2 cajas (dividir espacio)
+*/
+
+/* Por defecto: 3 columnas (para cuando hay 1 sola caja) */
+.o_pdis_pos_column .o_pdis_orders {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-auto-rows: max-content !important;
+    gap: 0.75rem !important;
+}
+
+/* Cuando hay MÚLTIPLES cajas (2+), usar 2 columnas por caja */
+.o_pdis_pos_columns:has(.o_pdis_pos_column:nth-child(2)) .o_pdis_pos_column .o_pdis_orders {
+    grid-template-columns: repeat(2, 1fr) !important;
+}
+
+/* Faster animation for stage changes - ultra fast 0.1s */
+.o_pdis_order_card.o_pdis_stage--animation {
+    animation: change-stage-fade 0.1s ease-out !important;
+}
+
+@keyframes change-stage-fade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+}
+
+/* Sidebar styling - solid background to prevent transparency issues */
+.o_pdis_sidebar {
+    background-color: #212529 !important;
+    color: white !important;
+    border-right: 1px solid #444;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.o_pdis_sidebar .btn-info {
+    background-color: #f7931e !important;
+    border-color: #f7931e !important;
+    color: white !important;
+}
+
+/* ========================================
+   KEYBOARD SELECTION HIGHLIGHT 
+   (Para las ÓRDENES, NO para el sidebar)
+   ======================================== */
+.o_pdis_order_card.o_pdis_order_selected {
+    border: 5px solid #080807 !important;
+    box-shadow:
+        0 0 0 2px #080807 inset,
+        /* Inner border for better visibility */
+        0 0 20px rgba(3, 3, 3, 0.6),
+        0 0 40px rgba(247, 147, 30, 0.3) !important;
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    z-index: 10;
+}
+
+/* Animación de pulso para hacer la selección más obvia */
+@keyframes pulse-selection {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 2px #080807 inset,
+            0 0 20px rgba(3, 3, 3, 0.6),
+            0 0 40px rgba(247, 147, 30, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 4px #080807 inset,
+            0 0 30px rgba(7, 7, 7, 0.9),
+            0 0 60px rgba(247, 147, 30, 0.6);
+    }
+}
+
+.o_pdis_order_card.o_pdis_order_selected {
+    animation: pulse-selection 2s ease-in-out infinite;
+}

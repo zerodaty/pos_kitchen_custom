@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override KDS Index to use custom Arturos favicon -->
+    <template id="pos_preparation_display_index_custom" inherit_id="pos_preparation_display.index">
+        <!-- Replace favicon -->
+        <xpath expr="//link[@rel='shortcut icon'][@href='/point_of_sale/static/src/img/favicon.ico']" position="replace">
+            <link rel="shortcut icon" href="/arturos_pos_kitchen_custom/static/src/img/favicon.png" type="image/png" />
+        </xpath>
+        
+        <xpath expr="//link[@rel='icon'][@href='/point_of_sale/static/src/img/favicon.ico']" position="replace">
+            <link rel="icon" href="/arturos_pos_kitchen_custom/static/src/img/favicon.png" type="image/png" />
+        </xpath>
+        
+        <!-- Replace touch icons with Arturos logo -->
+        <xpath expr="//link[@rel='shortcut icon'][@sizes='196x196']" position="replace">
+            <link rel="shortcut icon" sizes="196x196" href="/arturos_pos_kitchen_custom/static/src/img/favicon.png" />
+        </xpath>
+        
+        <xpath expr="//link[@rel='shortcut icon'][@sizes='128x128']" position="replace">
+            <link rel="shortcut icon" sizes="128x128" href="/arturos_pos_kitchen_custom/static/src/img/favicon.png" />
+        </xpath>
+    </template>
+</odoo>

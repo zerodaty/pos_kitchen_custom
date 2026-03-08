@@ -1,0 +1,15 @@
+/* Service Type Badge Styles */
+.service-type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    margin-left: 8px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+    color: white !important;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+    vertical-align: middle;
+}

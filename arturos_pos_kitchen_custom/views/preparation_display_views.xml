@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Preparation Display Form View to add Keyboard Navigation Settings and KDS Features -->
+    <record id="pos_preparation_display_view_form_keyboard" model="ir.ui.view">
+        <field name="name">pos.preparation.display.form.keyboard</field>
+        <field name="model">pos_preparation_display.display</field>
+        <field name="inherit_id" ref="pos_preparation_display.preparation_display_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add invisible technical field has_kds_only_pos -->
+            <xpath expr="//field[@name='category_ids']" position="before">
+                <field name="has_kds_only_pos" invisible="1"/>
+            </xpath>
+            
+            <!-- Make category_ids visible only when has_kds_only_pos is True -->
+            <xpath expr="//field[@name='category_ids']" position="attributes">
+                <attribute name="column_invisible">not has_kds_only_pos</attribute>
+            </xpath>
+            
+            <!-- Add KDS fields after category_ids -->
+            <xpath expr="//field[@name='category_ids']" position="after">
+                <field name="enable_auto_send_on_payment" 
+                       column_invisible="not has_kds_only_pos"
+                       widget="boolean_toggle"/>
+                <field name="show_empty_columns" 
+                       column_invisible="not has_kds_only_pos"
+                       widget="boolean_toggle"/>
+                <field name="kds_header_color" 
+                       column_invisible="not has_kds_only_pos"
+                       widget="color"/>
+            </xpath>
+            
+            <!-- Limit pos_config_ids to 2 configs maximum -->
+            <xpath expr="//field[@name='pos_config_ids']" position="attributes">
+                <attribute name="widget">many2many_tags</attribute>
+                <attribute name="options">{'no_create': True, 'limit': 2}</attribute>
+            </xpath>
+            
+            <!-- Add branding images group before keyboard group -->
+            <xpath expr="//group[1]" position="after">
+                <group name="kds_branding" string="Personalización Visual del KDS">
+                    <!-- Contenedor flex para alinear ambos campos horizontalmente -->
+                    <div style="display: flex; gap: 2rem; align-items: flex-start; padding: 0.5rem 0;" colspan="2">
+                        <!-- Imagen de Fondo -->
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <span class="fw-bold small text-muted" style="text-transform: uppercase; letter-spacing: 0.05em;">Imagen de Fondo</span>
+                            <field name="kds_background_image"
+                                   widget="image"
+                                   options="{'size': [180, 180]}"
+                                   string=""
+                                   nolabel="1"
+                                   style="width: 180px; height: 180px; object-fit: cover;"/>
+                            <div class="text-muted small">
+                                Recomendado: <strong>1920×1080px</strong><br/>
+                                Si no hay imagen se usa el fondo por defecto.
+                            </div>
+                        </div>
+                        <!-- Favicon / Logo -->
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <span class="fw-bold small text-muted" style="text-transform: uppercase; letter-spacing: 0.05em;">Favicon / Logo</span>
+                            <field name="kds_favicon_image"
+                                   widget="image"
+                                   options="{'size': [180, 180]}"
+                                   string=""
+                                   nolabel="1"
+                                   style="width: 180px; height: 180px; object-fit: contain;"/>
+                            <div class="text-muted small">
+                                Icono del KDS.<br/>
+                                Si no hay imagen se usa el favicon por defecto.
+                            </div>
+                        </div>
+                    </div>
+                </group>
+
+                <!-- Add keyboard navigation group after the existing group -->
+                <group name="keyboard_navigation" string="" column_invisible="not has_kds_only_pos">
+                    <group string="Navegación de Órdenes">
+                        <field name="key_navigate_up" placeholder="8" widget="key_capture"/>
+                        <field name="key_navigate_down" placeholder="2" widget="key_capture"/>
+                        <field name="key_navigate_left" placeholder="4" widget="key_capture"/>
+                        <field name="key_navigate_right" placeholder="6" widget="key_capture"/>
+                    </group>
+                    <group string="Acciones">
+                        <field name="key_advance_order" placeholder="Enter" widget="key_capture"/>
+                        <field name="key_fullscreen" placeholder="0" widget="key_capture"/>
+                        <field name="key_change_stage_prev" placeholder="7" widget="key_capture"/>
+                        <field name="key_change_stage_next" placeholder="9" widget="key_capture"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert" column_invisible="not has_kds_only_pos">
+                    <strong>💡 Configuración sugerida para numpad:</strong><br/>
+                    Orden anterior: 8 | Orden siguiente: 2 | Columna derecha: 6 | Columna izquierda: 4 <br/>
+                    Avanzar orden: Enter | Pantalla completa: 0 | Stage anterior: 7 | Stage siguiente: 9 <br/>
+                </div>
+            </xpath>
+            
+            <!-- Add auto-advance fields to stage configuration -->
+            <xpath expr="//field[@name='stage_ids']//list//field[@name='alert_timer']" position="after">
+                <field name="auto_advance_minutes" 
+                       string="Auto-limpieza (min)"
+                       placeholder="N/A"
+                       help="Minutos antes de eliminar automáticamente la orden de la pantalla. Solo aplica al último stage. Dejar vacío para no limpiar."/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

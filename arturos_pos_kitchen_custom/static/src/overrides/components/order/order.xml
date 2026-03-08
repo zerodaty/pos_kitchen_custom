@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="arturos_pos_kitchen_custom.Order" t-inherit="pos_preparation_display.Order" t-inherit-mode="extension">
+        <!-- Add data-order-id and selection class for keyboard navigation -->
+        <xpath expr="//section[hasclass('o_pdis_order_card')]" position="attributes">
+            <attribute name="t-att-data-order-id">this.props.order.id</attribute>
+            <attribute name="t-attf-class">{{this.isKeyboardSelected() ? 'o_pdis_order_selected' : ''}}</attribute>
+        </xpath>
+
+        <!-- Replace responsible staff with customer name -->
+        <xpath expr="//div[hasclass('o_pdis_staff')]" position="replace">
+            <div t-if="this.props.order.customer_name" class="o_pdis_customer w-100 text-truncate flex-shrink-1">
+                <i class="fa fa-user-circle-o pe-1" aria-hidden="true"/>
+                <span t-esc="this.props.order.customer_name"/>
+            </div>
+        </xpath>
+
+
+        <!-- Hide Reset and Done buttons when order is in last stage -->
+        <xpath expr="//div[hasclass('o_pdis_order_card_footer')]" position="replace">
+            <div class="o_pdis_order_card_footer bg-100">
+                <!-- No buttons shown when in last stage (Entregado) -->
+            </div>
+        </xpath>
+    </t>
+</templates>

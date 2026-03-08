@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="arturos_pos_kitchen_custom.KeyCaptureWidget">
+        <div class="o_field_key_capture d-flex gap-2 align-items-center">
+            <button 
+                type="button"
+                class="btn btn-primary"
+                t-att-class="{ 'btn-warning': state.isCapturing }"
+                t-on-click="startCapture"
+                t-att-disabled="isReadonly">
+                <t t-if="state.isCapturing">
+                    <i class="fa fa-keyboard-o me-1"/>Press any key...
+                </t>
+                <t t-else="">
+                    <i class="fa fa-hand-pointer-o me-1"/>
+                    <t t-esc="displayValue"/>
+                </t>
+            </button>
+            
+            <button 
+                type="button"
+                class="btn btn-sm btn-secondary"
+                t-on-click="clearKey"
+                t-att-disabled="isReadonly or !currentValue">
+                <i class="fa fa-times"/>
+            </button>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit the POS Config action to add branch filter -->
+    <record id="point_of_sale.action_pos_config_kanban" model="ir.actions.act_window">
+        <field name="domain">[('branch_id', '=', user.branch_id)]</field>
+    </record>
+</odoo>

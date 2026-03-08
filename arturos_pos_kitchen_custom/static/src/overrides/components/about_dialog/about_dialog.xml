@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="arturos_pos_kitchen_custom.AboutDialog">
+        <!-- Backdrop: tap outside to close -->
+        <div class="kds-about-backdrop" t-on-click="onBackdropClick">
+            <div class="kds-about-card">
+
+                <!-- Header bar with gradient -->
+                <div class="kds-about-header">
+                    <img src="/arturos_pos_kitchen_custom/static/src/img/venezuela.png"
+                         alt="Venezuela"
+                         class="kds-about-flag"/>
+                    <div class="kds-about-header-text">
+                        <span class="kds-about-built-by">Elaborado por</span>
+                        <span class="kds-about-author-name">Frany Velasquez</span>
+                    </div>
+                    <!-- Close button -->
+                    <button class="kds-about-close" t-on-click="() => this.props.onClose()">✕</button>
+                </div>
+
+                <!-- Body -->
+                <div class="kds-about-body">
+                    <!-- Avatar placeholder / initials -->
+                    <div class="kds-about-avatar">FV</div>
+
+                    <!-- Author details -->
+                    <div class="kds-about-details">
+                        <p class="kds-about-email">
+                            <span class="kds-about-icon">✉</span>
+                            zerodaty@gmail.com
+                        </p>
+                        <p class="kds-about-module">
+                            <span class="kds-about-icon">📦</span>
+                            arturos_pos_kitchen_custom
+                        </p>
+                        <p class="kds-about-license">
+                            <span class="kds-about-icon">⚖</span>
+                            Licencia: <strong>LGPL-3</strong> — Código Abierto
+                        </p>
+                    </div>
+
+                    <!-- GitHub link -->
+                    <button class="kds-about-github-btn" t-on-click="openGitHub">
+                        <img src="/arturos_pos_kitchen_custom/static/src/img/github.png"
+                             alt="GitHub"
+                             class="kds-about-github-icon"/>
+                        <span>Ver perfil en GitHub</span>
+                    </button>
+
+                    <p class="kds-about-footer-note">
+                        Este módulo es libre y de código abierto.
+                        <br/>Desarrollado con ❤️ desde Venezuela 🇻🇪
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </t>
+</templates>

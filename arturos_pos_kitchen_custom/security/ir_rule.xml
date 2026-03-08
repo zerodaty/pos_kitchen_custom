@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+        Simple branch filtering rule for KDS:
+        - If user has NO branch_id (admin): sees ALL KDS
+        - If user HAS branch_id: sees KDS where:
+          * No pos_configs assigned (empty), OR
+          * At least one pos_config has no branch_id, OR
+          * At least one pos_config has their branch_id
+    -->
+    <record id="preparation_display_branch_rule" model="ir.rule">
+        <field name="name">KDS: Filtrar por sucursal</field>
+        <field name="model_id" ref="pos_preparation_display.model_pos_preparation_display_display"/>
+        <field name="domain_force">[] if not user.branch_id else [
+            '|', '|',
+                ('pos_config_ids', '=', False),
+                ('pos_config_ids.branch_id', '=', False),
+                ('pos_config_ids.branch_id', '=', user.branch_id.id)
+        ]</field>
+        <field name="global" eval="True"/>
+    </record>
+</odoo>
