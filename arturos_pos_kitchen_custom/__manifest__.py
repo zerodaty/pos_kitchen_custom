@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 {
   # Theme information
-  'name': 'ARTUROS POS Kitchen Custom',
+  'name': 'POS Kitchen Custom',
   'version': '18.0.1.0.0',
   'category': 'Point of Sale',
   'countries': ['ve'],
-  'summary': 'ARTUROS POS Kitchen Customizations',
-  'description': """ ARTUROS POS Kitchen Customizations """,
+  'summary': 'POS Kitchen Customizations',
+  'description': """ POS Kitchen Customizations """,
 
   # Author
-  'author': 'ARTUROS C.A',
-  'maintainer': 'ARTUROS C.A',
+  'author': 'Frany Velasquez,
+  'maintainer': 'Frany Velasquez',
   'license': 'LGPL-3',
   'contributors': [
     
